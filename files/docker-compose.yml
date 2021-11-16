@@ -9,6 +9,8 @@ services:
     - 443:443
   proxysql:
     image: docker pull percona/proxysql
+    ports:
+    - 6032:6032
 
 volumes:
   pmm_srv: {}
