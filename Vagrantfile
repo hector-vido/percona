@@ -9,7 +9,7 @@ vms = {
   'db1' => {'ip' => '10', 'script' => 'xtradb.sh'},
   'db2' => {'ip' => '20', 'script' => 'xtradb.sh'},
   'db3' => {'ip' => '30', 'script' => 'xtradb.sh'},
-  'proxysql' => {'memory' => 256, 'cpus' => 1, 'ip' => '40', 'script' => 'proxysql.sh'},
+  'extras' => {'memory' => 1024, 'cpus' => 2, 'ip' => '40', 'script' => 'extras.sh'},
 }
 
 resources = {
