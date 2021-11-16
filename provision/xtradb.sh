@@ -26,6 +26,7 @@ debconf-set-selections <<< 'percona-server-server percona-server-server/re-root-
 DEBIAN_FRONTEND=noninteractive apt-get install -y percona-xtradb-cluster
 
 systemctl stop mysql
+systemctl enable mysql
 cp /vagrant/files/mysqld.cnf /etc/mysql/mysql.conf.d/mysqld.cnf
 NODE_IP=$(ip address show eth1 | grep -Eo '172\.27\.11\.[0-9]{2}/' | tr -d '/')
 SERVER_ID=$(echo $NODE_IP | awk -F . '{print $NF}')
@@ -37,10 +38,7 @@ if [ "$HOSTNAME" == "db1" ]; then
 	echo -e '[mysql]\nuser=root\npassword=percona' > ~/.my.cnf
 	apt-get install -y git
 	git clone --depth 1 --quiet https://github.com/datacharmer/test_db.git ~/employees-db
-	wget --quiet https://downloads.mysql.com/docs/sakila-db.tar.gz -O - | tar -xzv -C ~/
 	cd ~/employees-db
-	mysql < employees.sql
-	cd ~/sakila-db
-	cat sakila-schema.sql sakila-data.sql | mysql
-	sh /vagrant/provision/bootstrap.sh &
+	mysql -f < employees.sql
+	sh -x /vagrant/provision/bootstrap.sh > /tmp/bootstrap-log 2>&1 &
 fi
