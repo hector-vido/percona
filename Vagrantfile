@@ -14,7 +14,7 @@ vms = {
 
 resources = {
   'cpus' => 2,
-  'memory' => 1024
+  'memory' => 2048
 }
 
 Vagrant.configure('2') do |config|

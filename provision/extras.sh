@@ -7,7 +7,7 @@ cp /vagrant/files/key.pub /root/.ssh/authorized_keys
 chmod 400 /root/.ssh/*
 
 apt-get update
-apt-get install -y docker.io docker-compose mariadb-client
+apt-get install -y docker.io docker-compose mariadb-client sysbench
 
 mkdir -p /opt/containers
 cp /vagrant/files/{docker-compose.yml,proxysql.cnf} /opt/containers
