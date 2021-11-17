@@ -6,6 +6,7 @@ services:
     volumes:
     - pmm_srv:/srv
     ports:
+    - 80:80
     - 443:443
   proxysql:
     image: percona/proxysql

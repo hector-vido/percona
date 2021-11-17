@@ -10,4 +10,6 @@ for I in 20 30; do
 	ssh 172.27.11.$I 'systemctl stop mysql'
 	scp /var/lib/mysql/server-cert.pem /var/lib/mysql/server-key.pem /var/lib/mysql/ca.pem 172.27.11.$I:/var/lib/mysql/
 	ssh 172.27.11.$I 'systemctl start mysql && systemctl enable mysql'
+	ssh 172.27.11.$I 'pmm-admin config --server-insecure-tls --server-url=https://admin:admin@172.27.11.40'
+	ssh 172.27.11.$I 'pmm-admin add mysql --username=pmm --password=percona --query-source=perfschema'
 done

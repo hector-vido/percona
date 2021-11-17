@@ -23,7 +23,7 @@ dpkg -i percona-release_latest.$(lsb_release -sc)_all.deb
 percona-release setup pxc-80
 debconf-set-selections <<< 'percona-server-server percona-server-server/root-pass password percona'
 debconf-set-selections <<< 'percona-server-server percona-server-server/re-root-pass password percona'
-DEBIAN_FRONTEND=noninteractive apt-get install -y percona-xtradb-cluster
+DEBIAN_FRONTEND=noninteractive apt-get install -y percona-xtradb-cluster pmm2-client
 
 systemctl stop mysql
 systemctl enable mysql
@@ -39,6 +39,10 @@ if [ "$HOSTNAME" == "db1" ]; then
 	mysql -e "CREATE USER monitor IDENTIFIED WITH mysql_native_password BY 'proxysql'"
 	mysql -e "CREATE USER app IDENTIFIED WITH mysql_native_password BY 'percona'"
 	mysql -e "GRANT ALL ON *.* TO app"
+	mysql -e "CREATE USER pmm@localhost IDENTIFIED BY 'percona' WITH MAX_USER_CONNECTIONS 10"
+	mysql -e "GRANT SELECT, PROCESS, SUPER, REPLICATION CLIENT, RELOAD ON *.* TO pmm@localhost"
+	pmm-admin config --server-insecure-tls --server-url=https://admin:admin@172.27.11.40
+	pmm-admin add mysql --username=pmm --password=percona --query-source=perfschema
 	apt-get install -y git
 	git clone --depth 1 --quiet https://github.com/datacharmer/test_db.git ~/employees-db
 	cd ~/employees-db
