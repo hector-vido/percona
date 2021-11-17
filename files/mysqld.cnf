@@ -13,6 +13,10 @@ pid-file=/var/run/mysqld/mysqld.pid
 # Binary log expiration period is 604800 seconds, which equals 7 days
 binlog_expire_logs_seconds=604800
 
+######## innodb ##############
+innodb_flush_method = O_DIRECT
+innodb_buffer_pool_size = 1G
+
 ######## wsrep ###############
 # Path to Galera library
 wsrep_provider=/usr/lib/galera4/libgalera_smm.so
