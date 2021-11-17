@@ -5,6 +5,7 @@ This repository provision a Percona XtraDB Cluster (PXC) with ProxySQL and Perco
 There are 4 machines:
 
 | Name   | Services      |
+|--------|---------------|
 | db1    | pxc           |
 | db2    | pxc           |
 | db3    | pxc           |
@@ -22,7 +23,7 @@ vagrant up
 
 ## PXC
 
-To access the local MySQL inside the **db** machine:
+To access the local MySQL inside the **db's** machines:
 
 ```bash
 mysql -u root -ppercona
@@ -30,8 +31,8 @@ mysql -u root -ppercona
 
 ## Extras
 
-The ProxySQL and PMM are running inside containers on **extras** machina.
-They are controlled by a **compose file** trought a service named `containers`.
+The ProxySQL and PMM are running inside containers on **extras** machine.
+They are controlled by a **compose file** through a service named `containers`.
 
 ```bash
 systemctl status containers
