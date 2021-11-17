@@ -27,13 +27,22 @@ systemctl daemon-reload
 systemctl start containers
 systemctl enable containers
 
-curl -s localhost > /dev/null
+curl -s 'http://172.27.11.40/graph/login' > /dev/null
 while [ "$?" -ne 0 ]; do
-    curl -s localhost > /dev/null
+  sleep 10
+  curl -s 'http://172.27.11.40/graph/login' > /dev/null
 done
 
-curl 'http://172.27.11.40/graph/login' -d user=admin -d password=admin --cookie-jar cookie
-docker exec -ti percona_pmm_1 \
-  pmm-admin remove postgresql pmm-server-postgresql --server-insecure-tls --server-url=https://admin:admin@localhost/
-docker exec -ti percona_pmm_1 \
-  pmm-admin add proxysql --username=pmm --password=percona --host=172.27.11.40 --service-name=proxysql --server-url=https://admin:admin@localhost/ --server-insecure-tls
+curl -s 'http://172.27.11.40/graph/login' -d user=admin -d password=admin --cookie-jar cookie
+
+SERVER_URL=https://admin:admin@localhost/
+docker exec percona_pmm_1 pmm-admin list --server-insecure-tls --server-url=$SERVER_URL
+while [ "$?" -ne 0 ]; do
+  sleep 10
+  docker exec percona_pmm_1 pmm-admin list --server-insecure-tls --server-url=$SERVER_URL
+done
+
+docker exec percona_pmm_1 \
+  pmm-admin remove postgresql pmm-server-postgresql --server-insecure-tls --server-url=$SERVER_URL
+docker exec percona_pmm_1 \
+  pmm-admin add proxysql --username=pmm --password=percona --host=172.27.11.40 --service-name=proxysql --server-insecure-tls --server-url=$SERVER_URL
