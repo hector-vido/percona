@@ -9,12 +9,12 @@ vms = {
   'db1' => {'ip' => '10', 'script' => 'xtradb.sh'},
   'db2' => {'ip' => '20', 'script' => 'xtradb.sh'},
   'db3' => {'ip' => '30', 'script' => 'xtradb.sh'},
-  'extras' => {'memory' => 1024, 'cpus' => 2, 'ip' => '40', 'script' => 'extras.sh'},
+  'extras' => {'memory' => 2048, 'cpus' => 2, 'ip' => '40', 'script' => 'extras.sh'},
 }
 
 resources = {
   'cpus' => 2,
-  'memory' => 2048
+  'memory' => 1024
 }
 
 Vagrant.configure('2') do |config|

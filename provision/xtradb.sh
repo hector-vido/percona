@@ -36,6 +36,9 @@ sed -i -e "s/@NODE_IP@/$NODE_IP/" -e "s/@SERVER_ID@/$SERVER_ID/" /etc/mysql/mysq
 if [ "$HOSTNAME" == "db1" ]; then
 	systemctl start mysql@bootstrap.service
 	echo -e '[mysql]\nuser=root\npassword=percona' > ~/.my.cnf
+	mysql -e "CREATE USER monitor IDENTIFIED WITH mysql_native_password BY 'proxysql'"
+	mysql -e "CREATE USER app IDENTIFIED WITH mysql_native_password BY 'percona'"
+	mysql -e "GRANT ALL ON *.* TO app"
 	apt-get install -y git
 	git clone --depth 1 --quiet https://github.com/datacharmer/test_db.git ~/employees-db
 	cd ~/employees-db
