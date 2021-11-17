@@ -1,0 +1,13 @@
+[Unit]
+Description=PMM & ProxySQL
+After=docker.service
+Requires=docker.service
+
+[Service]
+TimeoutStartSec=0
+Restart=always
+ExecStartPre=-/usr/bin/docker-compose -f /opt/containers/docker-compose.yml down
+ExecStart=/usr/bin/docker-compose -p percona -f /opt/containers/docker-compose.yml up
+
+[Install]
+WantedBy=multi-user.target
