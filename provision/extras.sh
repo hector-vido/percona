@@ -34,4 +34,6 @@ done
 
 curl 'http://172.27.11.40/graph/login' -d user=admin -d password=admin --cookie-jar cookie
 docker exec -ti percona_pmm_1 \
+  pmm-admin remove postgresql pmm-server-postgresql --server-insecure-tls --server-url=https://admin:admin@localhost/
+docker exec -ti percona_pmm_1 \
   pmm-admin add proxysql --username=pmm --password=percona --host=172.27.11.40 --service-name=proxysql --server-url=https://admin:admin@localhost/ --server-insecure-tls
