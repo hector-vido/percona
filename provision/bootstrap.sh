@@ -13,3 +13,14 @@ for I in 20 30; do
 	ssh 172.27.11.$I 'pmm-admin config --server-insecure-tls --server-url=https://admin:admin@172.27.11.40'
 	ssh 172.27.11.$I 'pmm-admin add mysql --username=pmm --password=percona --query-source=perfschema'
 done
+
+curl -s 172.27.11.40 > /dev/null
+while [ "$?" -ne 0 ]; do
+	curl -s 172.27.11.40 > /dev/null
+done
+
+ssh -o stricthostkeychecking=no 172.27.11.10 hostname
+for I in 10 20 30; do
+	ssh 172.27.11.$I 'pmm-admin config --server-insecure-tls --server-url=https://admin:admin@172.27.11.40'
+	ssh 172.27.11.$I 'pmm-admin add mysql --username=pmm --password=percona --query-source=perfschema'
+done

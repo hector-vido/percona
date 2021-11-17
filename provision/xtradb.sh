@@ -41,8 +41,6 @@ if [ "$HOSTNAME" == "db1" ]; then
 	mysql -e "GRANT ALL ON *.* TO app"
 	mysql -e "CREATE USER pmm@localhost IDENTIFIED BY 'percona' WITH MAX_USER_CONNECTIONS 10"
 	mysql -e "GRANT SELECT, PROCESS, SUPER, REPLICATION CLIENT, RELOAD ON *.* TO pmm@localhost"
-	pmm-admin config --server-insecure-tls --server-url=https://admin:admin@172.27.11.40
-	pmm-admin add mysql --username=pmm --password=percona --query-source=perfschema
 	apt-get install -y git
 	git clone --depth 1 --quiet https://github.com/datacharmer/test_db.git ~/employees-db
 	cd ~/employees-db
